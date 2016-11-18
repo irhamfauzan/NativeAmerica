@@ -12,7 +12,13 @@ import java.util.ArrayList;
 
 public class family extends AppCompatActivity {
 
-    MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer;
+
+    private MediaPlayer.OnCompletionListener mComletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,19 +51,8 @@ public class family extends AppCompatActivity {
         Log.v("number","word at index 8 = "+words.get(8));
         Log.v("number","word at index 9 = "+words.get(9));
 
-        //
-        //LinearLayout Number_View = (LinearLayout) findViewById(R.id.Number_view);
-
-        /*for (int index=0; index < words.size(); index++){
-            TextView wordView = new TextView(this);
-            wordView.setText(words.get(index));
-            Number_View.addView(wordView);
-        }*/
-
         WordAdapter adapter = new WordAdapter(this, words, R.color.category_family);
 
-        //GridView gridview = (GridView) findViewById(R.id.list);
-        //gridview.setAdapter(itemadapter);
         ListView listview = (ListView) findViewById(R.id.list);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,9 +60,20 @@ public class family extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Word word= words.get(i);
+                releaseMediaPlayer();
+
                 mMediaPlayer = MediaPlayer.create(family.this, word.getmAudioResourceId());
                 mMediaPlayer.start();
+
+                mMediaPlayer.setOnCompletionListener(mComletionListener);
             }
         });
+    }
+    private void releaseMediaPlayer() {
+        // If the media player is not null, then it may be currently playing a sound.
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 }

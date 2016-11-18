@@ -12,7 +12,13 @@ import java.util.ArrayList;
 
 public class phrase extends AppCompatActivity {
 
-    MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer;
+
+    private MediaPlayer.OnCompletionListener mComletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,20 +38,9 @@ public class phrase extends AppCompatActivity {
         words.add(new Word("I’m coming.","әәnәm", R.raw.phrase_im_coming));
         words.add(new Word("Let’s go.","yoowutis", R.raw.phrase_lets_go));
         words.add(new Word("Come here.","әnni'nem", R.raw.phrase_come_here));
-
-
-        //LinearLayout Number_View = (LinearLayout) findViewById(R.id.Number_view);
-
-        /*for (int index=0; index < words.size(); index++){
-            TextView wordView = new TextView(this);
-            wordView.setText(words.get(index));
-            Number_View.addView(wordView);
-        }*/
-
+        
         WordAdapter adapter = new WordAdapter(this, words, R.color.category_phrases);
 
-        //GridView gridview = (GridView) findViewById(R.id.list);
-        //gridview.setAdapter(itemadapter);
         ListView listview = (ListView) findViewById(R.id.list);
         listview.setAdapter(adapter);
 
@@ -54,9 +49,19 @@ public class phrase extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Word word= words.get(i);
+                releaseMediaPlayer();
+
                 mMediaPlayer = MediaPlayer.create(phrase.this, word.getmAudioResourceId());
                 mMediaPlayer.start();
+
+                mMediaPlayer.setOnCompletionListener(mComletionListener);
             }
         });
+    }
+    private void releaseMediaPlayer() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 }
