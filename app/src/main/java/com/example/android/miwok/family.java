@@ -55,6 +55,7 @@ public class family extends AppCompatActivity {
 
         ListView listview = (ListView) findViewById(R.id.list);
         listview.setAdapter(adapter);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -70,7 +71,6 @@ public class family extends AppCompatActivity {
         });
     }
     private void releaseMediaPlayer() {
-        // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
             mMediaPlayer = null;
