@@ -41,17 +41,6 @@ public class number extends AppCompatActivity {
         words.add(new Word("Nine", "Wo'e", R.drawable.number_nine, R.raw.number_nine));
         words.add(new Word("Ten", "Na'aacha", R.drawable.number_ten, R.raw.number_ten));
 
-        // Lihat Log Number
-        Log.v("number", "word at index 0 = " + words.get(0));
-        Log.v("number", "word at index 1 = " + words.get(1));
-        Log.v("number", "word at index 2 = " + words.get(2));
-        Log.v("number", "word at index 3 = " + words.get(3));
-        Log.v("number", "word at index 4 = " + words.get(4));
-        Log.v("number", "word at index 5 = " + words.get(5));
-        Log.v("number", "word at index 6 = " + words.get(6));
-        Log.v("number", "word at index 7 = " + words.get(7));
-        Log.v("number", "word at index 8 = " + words.get(8));
-        Log.v("number", "word at index 9 = " + words.get(9));
 
         WordAdapter adapter = new WordAdapter(this, words, R.color.category_numbers);
 
